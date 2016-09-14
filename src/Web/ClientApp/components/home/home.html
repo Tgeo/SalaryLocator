@@ -1,0 +1,25 @@
+<h1>Salary Locator</h1>
+
+<form>
+    <div class="form-group">
+        <select (change)="stateSelected($event.target.value)" class="form-control">
+            <option *ngFor="let state of states" [value]="state.code">{{ state.name }}</option>
+        </select>
+
+        <select (change)="areaSelected($event.target.value)" class="form-control">
+            <option *ngFor="let area of areas" [value]="area.code">{{ area.name }}</option>
+        </select>
+
+        <select (change)="occupationSelected($event.target.value)" class="form-control">
+            <option *ngFor="let occupation of occupations" [value]="occupation.code">{{ occupation.title }}</option>
+        </select>
+    </div>
+</form>
+
+<div *ngIf="selectedSalary">
+    <h4>Salary data:</h4>
+    <p>Total employment: {{ selectedSalary.totalEmployment }}</p>
+    <p>Jobs per thousand: {{ selectedSalary.jobsPerThousand }}</p>
+    <p *ngIf="selectedSalary.hourlyMean">Hourly mean: {{ selectedSalary.hourlyMean | currency:'USD':true:'1.2-2' }}</p>
+    <p *ngIf="selectedSalary.annualMean">Annual mean: {{ selectedSalary.annualMean | currency:'USD':true:'1.0' }}</p>
+</div>
