@@ -23,12 +23,25 @@ export class Home implements OnInit {
     }
 
     ngOnInit() {
-        this.getStates();
+        this.getOccupations();
     }
 
-    getStates() {
-        this.salaryService.getStates()
-            .then(states => this.states = states);
+    getOccupations() {
+        this.salaryService.getOccupations()
+            .then(occupations => this.occupations = occupations);
+    }
+
+    // getStates() {
+    //     this.salaryService.getStates()
+    //         .then(states => this.states = states);
+    // }
+
+    occupationSelected(occupationCode : string) {
+        if (!occupationCode) return;
+        
+
+        // this.salaryService.getSalaryData(this.selectedAreaCode, occupationCode)
+        //     .then(salary => this.selectedSalary = salary);
     }
 
     stateSelected(stateCode : string) {
@@ -40,12 +53,7 @@ export class Home implements OnInit {
     areaSelected(areaCode : number) {
         this.selectedAreaCode = areaCode;
         if (!this.selectedAreaCode) return;
-        this.salaryService.getOccupations(this.selectedAreaCode)
+        this.salaryService.getOccupations()
             .then(occupations => this.occupations = occupations);
-    }
-
-    occupationSelected(occupationCode : string) {
-        this.salaryService.getSalaryData(this.selectedAreaCode, occupationCode)
-            .then(salary => this.selectedSalary = salary);
     }
 }

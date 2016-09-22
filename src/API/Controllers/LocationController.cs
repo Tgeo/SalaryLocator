@@ -24,10 +24,19 @@ namespace SalaryLocator.API.Controllers
             return Ok(_locationService.GetStates());
         }
 
-        [HttpGet("area/{stateCode}")]
+        [HttpGet("area")]
         public async Task<IActionResult> Get(string stateCode)
         {
             var areas = await _locationService.GetAreas(stateCode).ToListAsync();
+            if (areas == null || !areas.Any())
+                return NotFound();
+            return Ok(areas);
+        }
+
+        [HttpGet("area.HighestSalaries")]
+        public async Task<IActionResult> GetAreasWithHighestSalaries(string occupationCode)
+        {
+            var areas = await _locationService.GetAreasWithHighestSalariesAsync(occupationCode);
             if (areas == null || !areas.Any())
                 return NotFound();
             return Ok(areas);

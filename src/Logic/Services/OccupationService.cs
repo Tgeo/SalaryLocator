@@ -28,5 +28,14 @@ namespace SalaryLocator.Logic.Services
             // OrderBy clause is separate because query expression doesn't support IOrderedQueryable<T>.
             return occupations.OrderBy(o => o.Title);
         }
+
+        public IQueryable<Occupation> GetOccupations()
+        {
+            var occupations = from occupation in _dbContext.Occupations
+                              where occupation.GroupType != 1 && occupation.GroupType != 2
+                              select occupation;
+            // OrderBy clause is separate because query expression doesn't support IOrderedQueryable<T>.
+            return occupations.OrderBy(o => o.Title);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SalaryLocator.Logic.Services;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace SalaryLocator.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int areaCode, string occupationCode)
         {
-            var salaryRecord = await _salaryService.GetSalaryRecordAsync(areaCode, occupationCode);
+            var salaryRecord = await _salaryService.GetSalaryAsync(areaCode, occupationCode);
             if (salaryRecord == null)
                 return NotFound();
             return Ok(salaryRecord);

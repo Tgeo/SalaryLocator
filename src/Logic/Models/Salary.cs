@@ -55,18 +55,18 @@ namespace SalaryLocator.Logic.Models
 
 
         [Column("annual_10_pct")]
-        public decimal? Annual10Percentile { get; set; }
+        public int? Annual10Percentile { get; set; }
 
         [Column("annual_25_pct")]
-        public decimal? Annual25Percentile { get; set; }
+        public int? Annual25Percentile { get; set; }
 
         [Column("annual_med_pct")]
-        public decimal? AnnualMedianPercentile { get; set; }
+        public int? AnnualMedianPercentile { get; set; }
 
         [Column("annual_75_pct")]
-        public decimal? Annual75Percentile { get; set; }
+        public int? Annual75Percentile { get; set; }
 
         [Column("annual_90_pct")]
-        public decimal? Annual90Percentile { get; set; }
+        public int? Annual90Percentile { get; set; }
     }
 }

@@ -9,8 +9,6 @@ namespace SalaryLocator.Logic
 {
     public class MSADbContext : DbContext
     {
-        public virtual DbSet<SalaryRecord> SalaryRecords { get; set; }
-
         public virtual DbSet<State> States { get; set; }
 
         public virtual DbSet<Area> Areas { get; set; }
@@ -23,17 +21,22 @@ namespace SalaryLocator.Logic
             : base(options)
         { }
 
+        public string GetConnectionString()
+        {
+            // Done so this can be used else-where.
+            // ConnectionString not exposed except through DbConnection.
+            using (var connection = Database.GetDbConnection())
+            {
+                return connection.ConnectionString;
+            }
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SalaryRecord>(entity =>
-            {
-                entity.ForNpgsqlToTable("salaries");
-                entity.HasKey(e => new { e.AreaCode, e.OccupationCode });
-            });
             modelBuilder.Entity<State>(entity =>
             {
                 entity.ForNpgsqlToTable("state");

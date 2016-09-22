@@ -19,14 +19,14 @@ export class SalaryService {
     }
 
     getAreas(stateCode: string) : Promise<Area[]> {
-        return this.http.get('http://localhost:52463/api/location/area/' + stateCode)
+        return this.http.get('http://localhost:52463/api/location/area?stateCode=' + stateCode)
             .toPromise()
             .then(response => response.json() as Area[])
             .catch(this.handleError);
     }
 
-    getOccupations(areaCode : number) : Promise<Occupation[]> {
-        let url = 'http://localhost:52463/api/occupation/' + areaCode;
+    getOccupations() : Promise<Occupation[]> {
+        let url = 'http://localhost:52463/api/occupation';
         return this.http.get(url)
             .toPromise()
             .then(response => response.json() as Occupation[])

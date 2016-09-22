@@ -26,5 +26,14 @@ namespace SalaryLocator.API.Controllers
                 return NotFound();
             return Ok(occupations);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var occupations = await _occupationService.GetOccupations().ToListAsync();
+            if (occupations == null || !occupations.Any())
+                return NotFound();
+            return Ok(occupations);
+        }
     }
 }

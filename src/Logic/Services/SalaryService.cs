@@ -16,12 +16,7 @@ namespace SalaryLocator.Logic.Services
             _dbContext = dbContext;
         }
 
-        public IQueryable<SalaryRecord> GetRecords()
-        {
-            return _dbContext.SalaryRecords;
-        }
-
-        public async Task<Salary> GetSalaryRecordAsync(int areaCode, string occupationCode)
+        public async Task<Salary> GetSalaryAsync(int areaCode, string occupationCode)
         {
             if (areaCode <= 0)
                 throw new ArgumentOutOfRangeException(nameof(areaCode));
