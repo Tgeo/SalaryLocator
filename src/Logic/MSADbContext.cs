@@ -21,16 +21,6 @@ namespace SalaryLocator.Logic
             : base(options)
         { }
 
-        public string GetConnectionString()
-        {
-            // Done so this can be used else-where.
-            // ConnectionString not exposed except through DbConnection.
-            using (var connection = Database.GetDbConnection())
-            {
-                return connection.ConnectionString;
-            }
-        }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }

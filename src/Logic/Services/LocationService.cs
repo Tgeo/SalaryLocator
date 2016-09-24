@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using SalaryLocator.Logic.Helpers;
 using SalaryLocator.Logic.Models;
@@ -41,7 +42,7 @@ namespace SalaryLocator.Logic.Services
         public async Task<IEnumerable<AreaSalaryDTO>> GetAreasWithHighestSalariesAsync(string occupationCode)
         {
             // Not using EF here because of "greatest" in order by clause.
-            using (var connection = new NpgsqlConnection(_dbContext.GetConnectionString()))
+            using (var connection = _dbContext.Database.GetDbConnection())
             {
                 const string sql = @"
                     select *

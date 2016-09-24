@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace SalaryLocator.Logic.Models.DTOs
 {
     /// <summary>
-    /// Represents the salary stats for a specific area.
+    /// Represents the salary stats for a specific area and occupation.
     /// </summary>
     public class AreaSalaryDTO
     {
         [Column("area_code")]
-        public int Code { get; set; }
+        public int AreaCode { get; set; }
         [Column("primary_state_code")]
         public string PrimaryStateCode { get; set; }
         [Column("name")]
