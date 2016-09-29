@@ -1,3 +1,4 @@
+// If you make any changes to this file, execute the following command:
 // webpack --config webpack.config.vendor.js
 
 var path = require('path');

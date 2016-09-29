@@ -11,11 +11,12 @@ import { Salary } from '../models/salary';
     providers: [ SalaryService ]
 })
 export class Home implements OnInit {
-    
+  
     private states: State[] = [];
     private areas: Area[] = [];
     private occupations: Occupation[] = [];
-    
+    private currentAreas: any[] = [];
+
     private selectedAreaCode : number;
     private selectedSalary : Salary;
 
@@ -38,10 +39,8 @@ export class Home implements OnInit {
 
     occupationSelected(occupationCode : string) {
         if (!occupationCode) return;
-        
-
-        // this.salaryService.getSalaryData(this.selectedAreaCode, occupationCode)
-        //     .then(salary => this.selectedSalary = salary);
+        this.salaryService.getAreasWithHighestSalaries(occupationCode)
+            .then(areas => this.currentAreas = areas);
     }
 
     stateSelected(stateCode : string) {

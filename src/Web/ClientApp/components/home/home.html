@@ -2,7 +2,12 @@
 
 <form>
     <div class="form-group">
-        <select (change)="stateSelected($event.target.value)" class="form-control">
+        <label>Find your occupation:</label>
+        <select (change)="occupationSelected($event.target.value)" class="form-control">
+            <option *ngFor="let occupation of occupations" [value]="occupation.code">{{ occupation.title }}</option>
+        </select>
+
+        <!--<select (change)="stateSelected($event.target.value)" class="form-control">
             <option *ngFor="let state of states" [value]="state.code">{{ state.name }}</option>
         </select>
 
@@ -12,9 +17,13 @@
 
         <select (change)="occupationSelected($event.target.value)" class="form-control">
             <option *ngFor="let occupation of occupations" [value]="occupation.code">{{ occupation.title }}</option>
-        </select>
+        </select>-->
     </div>
 </form>
+
+<div *ngIf="currentAreas">
+    <p>hi, something is here</p>
+</div>
 
 <div *ngIf="selectedSalary">
     <h4>Salary data:</h4>

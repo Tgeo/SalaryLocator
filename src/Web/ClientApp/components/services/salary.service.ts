@@ -33,6 +33,14 @@ export class SalaryService {
             .catch(this.handleError);
     }
 
+    getAreasWithHighestSalaries(occupationCode : string) : Promise<any> {
+        let url = 'http://localhost:52463/api/location/area.HighestSalaries?occupationCode=' + occupationCode;
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response.json() as Salary)
+            .catch(this.handleError);
+    }
+
     getSalaryData(areaCode : number, occupationCode : string) : Promise<Salary> {
         let url = 'http://localhost:52463/api/salary?areaCode=' + areaCode + '&occupationCode=' + occupationCode;
         return this.http.get(url)
