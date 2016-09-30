@@ -1,0 +1,1 @@
+Angular SPA based on excellent: https://github.com/aspnet/JavaScriptServices via yeoman
