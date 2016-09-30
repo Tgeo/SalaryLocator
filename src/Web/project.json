@@ -1,11 +1,18 @@
 {
   "dependencies": {
+    "Microsoft.NETCore.App": {
+      "version": "1.0.1",
+      "type": "platform"
+    },
+    "Microsoft.AspNetCore.AngularServices": "1.0.0-*",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
+    "Microsoft.AspNetCore.Mvc": "1.0.1",
     "Microsoft.AspNetCore.Razor.Tools": {
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
     "Microsoft.AspNetCore.StaticFiles": "1.0.0",
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
     "Microsoft.Extensions.Configuration.Json": "1.0.0",
@@ -13,15 +20,7 @@
     "Microsoft.Extensions.Logging": "1.0.0",
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
-    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
-    "Microsoft.AspNetCore.AngularServices": "1.0.0-beta-000019",
-    "Microsoft.AspNetCore.Mvc": "1.0.1",
-    "Microsoft.AspNetCore.Mvc.Cors": "1.0.1",
-    "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
-    "Microsoft.NETCore.App": {
-      "version": "1.0.1",
-      "type": "platform"
-    }
+    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0"
   },
 
   "tools": {
@@ -53,14 +52,10 @@
   "publishOptions": {
     "include": [
       "appsettings.json",
-      "ClientApp",
+      "ClientApp/dist",
       "node_modules",
-      "typings",
       "Views",
-      "tsconfig.json",
-      "tsd.json",
       "web.config",
-      "webpack.*.js",
       "wwwroot"
     ]
   },
@@ -68,8 +63,8 @@
   "scripts": {
     "prepublish": [
       "npm install",
-      "node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js",
-      "node node_modules/webpack/bin/webpack.js"
+      "node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod",
+      "node node_modules/webpack/bin/webpack.js --env.prod"
     ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   },

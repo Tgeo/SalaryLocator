@@ -7,10 +7,10 @@ import { Salary } from '../models/salary';
 
 @Component({
     selector: 'home',
-    template: require('./home.html'),
+    template: require('./home.component.html'),
     providers: [ SalaryService ]
 })
-export class Home implements OnInit {
+export class HomeComponent implements OnInit {
   
     private states: State[] = [];
     private areas: Area[] = [];

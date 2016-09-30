@@ -1,16 +1,14 @@
 FROM microsoft/dotnet:latest
 
-COPY . /app
-
-WORKDIR /app
-
-# Add Node.js to the container. If you don't want to wait for this to install every
-# time you rebuild your container, consider creating an image that has it preinstalled.
 RUN apt-get update
 RUN apt-get install -y build-essential nodejs nodejs-legacy
 
+WORKDIR /app
+
+COPY project.json .
 RUN ["dotnet", "restore"]
 
+COPY . /app
 RUN ["dotnet", "build"]
 
 EXPOSE 5000/tcp
