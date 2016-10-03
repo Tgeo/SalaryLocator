@@ -21,14 +21,20 @@
     </div>
 </form>
 
-<div *ngIf="currentAreas">
-    <p>hi, something is here</p>
+<!--Don't render the chart server-side -- it won't work (and causes issues rendering the HTML)-->
+<div *ngIf="isBrowser">
+    <base-chart class="chart"
+                chartType="bar"
+                legend="true"
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"></base-chart>
 </div>
 
-<div *ngIf="selectedSalary">
+<!--<div *ngIf="selectedSalary">
     <h4>Salary data:</h4>
     <p>Total employment: {{ selectedSalary.totalEmployment }}</p>
     <p>Jobs per thousand: {{ selectedSalary.jobsPerThousand }}</p>
     <p *ngIf="selectedSalary.hourlyMean">Hourly mean: {{ selectedSalary.hourlyMean | currency:'USD':true:'1.2-2' }}</p>
     <p *ngIf="selectedSalary.annualMean">Annual mean: {{ selectedSalary.annualMean | currency:'USD':true:'1.0' }}</p>
-</div>
+</div>-->

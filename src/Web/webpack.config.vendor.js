@@ -6,6 +6,7 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var extractCSS = new ExtractTextPlugin('vendor.css');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     resolve: {
@@ -35,6 +36,7 @@ module.exports = {
             'es6-promise',
             'jquery',
             'zone.js',
+            'ng2-charts'
         ]
     },
     output: {
@@ -49,7 +51,11 @@ module.exports = {
         new webpack.DllPlugin({
             path: path.join(__dirname, 'wwwroot', 'dist', '[name]-manifest.json'),
             name: '[name]_[hash]'
-        })
+        }),
+        // Chart.js has to be copied directly to dist and referenced.
+        new CopyWebpackPlugin([
+            { from: 'node_modules/chart.js/dist/Chart.min.js' }
+        ])
     ].concat(isDevBuild ? [] : [
         new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
     ])
