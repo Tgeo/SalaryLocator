@@ -10,26 +10,19 @@ import { Salary } from '../models/salary';
 export class SalaryService {
 
     constructor(private http: Http) { }
-  
-    getStates() : Promise<State[]> {
-        return this.http.get('http://localhost:52463/api/location/state')
-            .toPromise()
-            .then(response => response.json() as State[])
-            .catch(this.handleError);
-    }
-
-    getAreas(stateCode: string) : Promise<Area[]> {
-        return this.http.get('http://localhost:52463/api/location/area?stateCode=' + stateCode)
-            .toPromise()
-            .then(response => response.json() as Area[])
-            .catch(this.handleError);
-    }
 
     getOccupations() : Promise<Occupation[]> {
         let url = 'http://localhost:52463/api/occupation';
         return this.http.get(url)
             .toPromise()
             .then(response => response.json() as Occupation[])
+            .catch(this.handleError);
+    }
+
+    getAreasWithOccupation(occupationCode : string) : Promise<Area[]> {
+        return this.http.get('http://localhost:52463/api/location/area/' + occupationCode)
+            .toPromise()
+            .then(response => response.json() as Area[])
             .catch(this.handleError);
     }
 

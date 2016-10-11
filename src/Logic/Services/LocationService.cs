@@ -30,6 +30,13 @@ namespace SalaryLocator.Logic.Services
             return _dbContext.States.OrderBy(s => s.Name);
         }
 
+        public IOrderedQueryable<Area> GetAreas()
+        {
+            return _dbContext.Areas
+                .OrderBy(a => a.PrimaryStateCode)
+                .ThenBy(a => a.Name);
+        }
+
         public IOrderedQueryable<Area> GetAreas(string stateCode)
         {
             if (string.IsNullOrWhiteSpace(stateCode))
@@ -39,6 +46,25 @@ namespace SalaryLocator.Logic.Services
                 .OrderBy(a => a.Name);
         }
 
+        /// <summary>
+        /// Gets every <see cref="Area"/> that has occupations for <paramref name="occupationCode"/>.
+        /// </summary>
+        /// <remarks>
+        /// For example, a small town might not have an CEO positions available.
+        /// </remarks>
+        public IQueryable<Area> GetAreasWithOccupation(string occupationCode)
+        {
+            if (string.IsNullOrWhiteSpace(occupationCode))
+                throw new ArgumentOutOfRangeException(nameof(occupationCode));
+            return from salary in _dbContext.Salaries
+                   join area in _dbContext.Areas on salary.AreaCode equals area.Code
+                   where salary.OccupationCode == occupationCode
+                   select area;
+        }
+
+        /// <summary>
+        /// Gets 5 areas with the highest salaries for <paramref name="occupationCode"/>
+        /// </summary>
         public async Task<IEnumerable<AreaSalaryDTO>> GetAreasWithHighestSalariesAsync(string occupationCode)
         {
             // Not using EF here because of "greatest" in order by clause.
@@ -51,7 +77,7 @@ namespace SalaryLocator.Logic.Services
                         on area.area_code = salary.area_code
                     where occupation_code = @OccupationCode
                     order by greatest(coalesce(annual_med_pct, -1), coalesce(hourly_med_pct * 40 * 52, -1)) desc
-                    limit 10
+                    limit 5
                 ";
                 var results = await connection.QueryAsync<AreaSalaryDTO>(sql, new { OccupationCode = occupationCode });
                 foreach (var result in results)

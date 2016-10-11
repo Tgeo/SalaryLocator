@@ -2,34 +2,40 @@
 
 <form>
     <div class="form-group">
-        <label>Find your occupation:</label>
+        <label>What is your occupation?:</label>
         <select (change)="occupationSelected($event.target.value)" class="form-control">
             <option *ngFor="let occupation of occupations" [value]="occupation.code">{{ occupation.title }}</option>
         </select>
 
-        <!--<select (change)="stateSelected($event.target.value)" class="form-control">
-            <option *ngFor="let state of states" [value]="state.code">{{ state.name }}</option>
-        </select>
+        <!--Don't render the chart server-side; It won't work (and causes issues rendering the HTML)-->
+        <div *ngIf="isBrowser && !selectedAreaCode" [@flyInOut]="toggle">
+            <base-chart class="chart"
+                        chartType="bar"
+                        legend="true"
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"></base-chart>
+        </div>
 
-        <select (change)="areaSelected($event.target.value)" class="form-control">
-            <option *ngFor="let area of areas" [value]="area.code">{{ area.name }}</option>
-        </select>
+        <div *ngIf="areas" [@flyInOut]="toggle">
+            <h4>Great. Now, let's adjust for cost of living.</h4>
+            <label>Where do you live?:</label>
+            <select (change)="areaSelected($event.target.value)" class="form-control">
+                <option *ngFor="let area of areas" [value]="area.code">{{ area.name }}</option>
+            </select>
+        </div>
 
-        <select (change)="occupationSelected($event.target.value)" class="form-control">
-            <option *ngFor="let occupation of occupations" [value]="occupation.code">{{ occupation.title }}</option>
-        </select>-->
+        <div *ngIf="selectedAreaCode" [@flyInOut]="toggle">
+            <!-- TODO: COL adjusted chart goes here. -->
+            <base-chart class="chart"
+                        chartType="bar"
+                        legend="true"
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"></base-chart>
+        </div>
     </div>
 </form>
-
-<!--Don't render the chart server-side -- it won't work (and causes issues rendering the HTML)-->
-<div *ngIf="isBrowser">
-    <base-chart class="chart"
-                chartType="bar"
-                legend="true"
-                [datasets]="barChartData"
-                [labels]="barChartLabels"
-                [options]="barChartOptions"></base-chart>
-</div>
 
 <!--<div *ngIf="selectedSalary">
     <h4>Salary data:</h4>
