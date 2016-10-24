@@ -23,8 +23,8 @@ CREATE TABLE living_wage_import(
 COPY living_wage_import
 FROM 'C:\dev\salarylocator\data\living_wage_data\2015_Living_Wage.csv' DELIMITER ',' CSV HEADER;
 
---select * from living_wage_import;
 
+--select * from living_wage_import;
 
 --select area.* from living_wage_import imp
 --right outer join area on area_code = fips_code

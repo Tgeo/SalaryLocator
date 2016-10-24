@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 using SalaryLocator.Logic.Helpers;
 using SalaryLocator.Logic.Models;
 using SalaryLocator.Logic.Models.DTOs;

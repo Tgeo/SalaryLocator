@@ -1,0 +1,11 @@
+*** What TODO? ***
+
+Data --> SQL:
+- (DONE) Import mapping from MSA Division to MSA to [Area] table
+- (DONE) Import living wage data
+- (DEFERRED) Import census metro data (List2.xls)
+- Form relationship between above in order to support the following queries:
+	- (DEFERRED) Get Cities by State
+	- (DEFERRED) Get MSA by City
+	- Get salary data for MSA by occupation
+	- Get highest paying MSA areas for specific occupation ADJUSTED for the living wage for that MSA

@@ -1,0 +1,54 @@
+NOTE!!!: After investigation this list, taken from http://www.bls.gov/sae/saemd.htm seems to have the wrong code for "Warren-Troy-Farmington Hills, Mich. Metropolitan Division".
+It has been changed from 47644 to 47664.
+
+MSA to MSA Division
+
+16980 	Chicago-Naperville-Elgin, Ill.-Ind.-Wis. Metropolitan Statistical Area
+   16974 	   Chicago-Naperville-Arlington Heights, Ill. Metropolitan Division
+   20994 	   Elgin, Ill. Metropolitan Division
+   23844 	   Gary, Ind. Metropolitan Division
+   29404 	   Lake County-Kenosha County, Ill.-Wis. Metropolitan Division
+19100  	Dallas-Fort Worth-Arlington, Texas Metropolitan Statistical Area
+   19124 	   Dallas-Plano-Irving, Texas Metropolitan Division
+   23104 	   Fort Worth-Arlington, Texas Metropolitan Division
+19820 	Detroit-Warren-Dearborn, Mich. Metropolitan Statistical Area
+   19804 	   Detroit-Dearborn-Livonia, Mich. Metropolitan Division
+   47664 	   Warren-Troy-Farmington Hills, Mich. Metropolitan Division
+31080 	Los Angeles-Long Beach-Anaheim, Calif. Metropolitan Statistical Area
+   11244 	   Anaheim-Santa Ana-Irvine, Calif. Metropolitan Division
+   31084 	   Los Angeles-Long Beach-Glendale, Calif. Metropolitan Division
+33100 	Miami-Fort Lauderdale-West Palm Beach, Fla. Metropolitan Statistical Area
+   22744 	   Fort Lauderdale-Pompano Beach-Deerfield Beach, Fla. Metropolitan Division
+   33124 	   Miami-Miami Beach-Kendall, Fla. Metropolitan Division
+   48424 	   West Palm Beach-Boca Raton-Delray Beach, Fla. Metropolitan Division
+35620 	New York-Newark-Jersey City, N.Y.-N.J.-Pa. Metropolitan Statistical Area
+   20524 	   Dutchess County-Putnam County, N.Y. Metropolitan Division
+   35004 	   Nassau County-Suffolk County, N.Y. Metropolitan Division
+   35084 	   Newark, N.J.-Pa. Metropolitan Division
+   35614 	   New York-Jersey City-White Plains, N.Y.-N.J. Metropolitan Division
+37980 	Philadelphia-Camden-Wilmington, Pa.-N.J.-Del.-Md. Metropolitan Statistical Area
+   15804 	   Camden, N.J. Metropolitan Division
+   33874 	   Montgomery County-Bucks County-Chester County, Pa. Metropolitan Division
+   37964 	   Philadelphia, Pa. Metropolitan Division
+   48864 	   Wilmington, Del.-Md.-N.J. Metropolitan Division
+41860 	San Francisco-Oakland-Hayward, Calif. Metropolitan Statistical Area
+   36084 	   Oakland-Hayward-Berkeley, Calif. Metropolitan Division
+   41884 	   San Francisco-Redwood City-South San Francisco, Calif. Metropolitan Division
+   42034 	   San Rafael, Calif. Metropolitan Division
+42660 	Seattle-Tacoma-Bellevue, Wash. Metropolitan Statistical Area
+   42644 	   Seattle-Bellevue-Everett, Wash. Metropolitan Division
+   45104 	   Tacoma-Lakewood, Wash. Metropolitan Division
+47900 	Washington-Arlington-Alexandria, D.C.-Va.-Md.-W.Va. Metropolitan Statistical Area
+   43524 	   Silver Spring-Frederick-Rockville, Md. Metropolitan Division
+   47894 	   Washington-Arlington-Alexandria, D.C.-Va.-Md.-W.Va. Metropolitan Division
+71650 	Boston-Cambridge-Nashua, Mass.-N.H. Metropolitan NECTA
+   71654 	    Boston-Cambridge-Newton, Mass. NECTA Division
+   72104 	    Brockton-Bridgewater-Easton, Mass. NECTA Division
+   73104 	    Framingham, Mass. NECTA Division
+   73604 	    Haverhill-Newburyport-Amesbury Town, Mass.-N.H. NECTA Division
+   74204 	    Lawrence-Methuen Town-Salem, Mass.-N.H. NECTA Division
+   74804 	    Lowell-Billerica-Chelmsford, Mass.-N.H. NECTA Division
+   74854 	    Lynn-Saugus-Marblehead, Mass. NECTA Division
+   75404 	    Nashua, N.H.-Mass. NECTA Division
+   76524 	    Peabody-Salem-Beverly, Mass. NECTA Division
+   78254 	    Taunton-Middleborough-Norton, Mass. NECTA Division

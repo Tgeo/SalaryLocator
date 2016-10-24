@@ -1,0 +1,3 @@
+http://livingwage.mit.edu/
+
+scraped by mikeasilva @: https://github.com/mikeasilva/living-wage

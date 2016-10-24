@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SalaryLocator.Logic.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SalaryLocator.Logic
 {
@@ -16,6 +12,8 @@ namespace SalaryLocator.Logic
         public virtual DbSet<Occupation> Occupations { get; set; }
 
         public virtual DbSet<Salary> Salaries { get; set; }
+
+        public virtual DbSet<LivingWage> LivingWages { get; set; }
 
         public MSADbContext(DbContextOptions<MSADbContext> options)
             : base(options)
@@ -46,6 +44,11 @@ namespace SalaryLocator.Logic
             {
                 entity.ForNpgsqlToTable("salary");
                 entity.HasKey(s => new { s.AreaCode, s.OccupationCode });
+            });
+            modelBuilder.Entity<LivingWage>(entity =>
+            {
+                entity.ForNpgsqlToTable("living_wage");
+                entity.HasKey(lw => lw.Code);
             });
         }
     }
