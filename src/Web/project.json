@@ -40,7 +40,10 @@
 
   "buildOptions": {
     "emitEntryPoint": true,
-    "preserveCompilationContext": true
+    "preserveCompilationContext": true,
+    "compile": {
+      "exclude": ["node_modules"]
+    }
   },
 
   "runtimeOptions": {
@@ -57,6 +60,9 @@
       "Views",
       "web.config",
       "wwwroot"
+    ],
+    "exclude": [
+      "wwwroot/dist/*.map"
     ]
   },
 

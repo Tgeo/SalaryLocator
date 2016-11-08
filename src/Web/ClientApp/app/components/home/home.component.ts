@@ -9,7 +9,7 @@ import { Salary } from '../models/salary';
 
 @Component({
     selector: 'home',
-    template: require('./home.component.html'),
+    templateUrl: './home.component.html',
     providers: [ SalaryService ],
     animations: [
         trigger('flyInOut', [
