@@ -17,6 +17,7 @@ namespace API
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                .UseUrls("http://localhost:52463")
                 .Build();
 
             host.Run();

@@ -9,12 +9,12 @@
 
         <!--Don't render the chart server-side; It won't work (and causes issues rendering the HTML)-->
         <div *ngIf="isBrowser && !selectedAreaCode" [@flyInOut]="toggle">
-            <base-chart class="chart"
-                        chartType="bar"
-                        legend="true"
-                        [datasets]="barChartData"
-                        [labels]="barChartLabels"
-                        [options]="barChartOptions"></base-chart>
+            <canvas baseChart
+                    chartType="bar"
+                    legend="true"
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"></canvas>
         </div>
 
         <div *ngIf="areas" [@flyInOut]="toggle">
@@ -27,12 +27,12 @@
 
         <div *ngIf="selectedAreaCode" [@flyInOut]="toggle">
             <!-- TODO: COL adjusted chart goes here. -->
-            <base-chart class="chart"
-                        chartType="bar"
-                        legend="true"
-                        [datasets]="barChartData"
-                        [labels]="barChartLabels"
-                        [options]="barChartOptions"></base-chart>
+            <canvas baseChart
+                    chartType="bar"
+                    legend="true"
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"></canvas>
         </div>
     </div>
 </form>
