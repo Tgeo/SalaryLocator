@@ -12,14 +12,11 @@ import { Salary } from '../models/salary';
     templateUrl: './home.component.html',
     providers: [ SalaryService ],
     animations: [
-        trigger('flyInOut', [
+        trigger('flyIn', [
             state('in', style({transform: 'translateX(0)'})),
             transition('void => *', [
                 style({transform: 'translateX(-100%)'}),
                 animate(500)
-            ]),
-            transition('* => void', [
-                animate(500, style({transform: 'translateX(100%)'}))
             ])
         ])
     ]
@@ -43,10 +40,6 @@ export class HomeComponent implements OnInit {
                 id: "y-axis-2",
                 gridLines: { display : false }
             }]
-        },
-        title: {
-            display: true,
-            text: 'Highest Paying Cities by Occupation'
         }
     };
     public barChartLabels: any[] = [];
@@ -56,31 +49,58 @@ export class HomeComponent implements OnInit {
     ];
 
     // Whether this is being rendered on browser or server.
+    // This is needed because rendering Charts server-side causes issues.
+    // Thus, we can choose not to render things until we are on the client.
     private isBrowser : boolean = universal.isBrowser;
 
     private areas: Area[];
     private occupations: Occupation[];
+    private selectedOccupationCode : string;
     private selectedAreaCode : number;
+    private selectedSalaryAmount : number;
+    private selectedSalary : Salary;
 
     constructor(private readonly salaryService : SalaryService) {
     }
 
     ngOnInit() {
-        this.getOccupations();
+        this.loadOccupations();
     }
 
-    getOccupations() {
+    loadOccupations() {
         this.salaryService.getOccupations()
-            .then(occupations => {
+            .then(occupations => {                
+                occupations.unshift(new Occupation());
                 this.occupations = occupations;
-                this.selectFirstOccupation();
             });
     }
 
     occupationSelected(occupationCode : string) {
-        this.getAreasWithHighestSalaries(occupationCode);
-        this.salaryService.getAreasWithOccupation(occupationCode)
-            .then(areas => this.areas = areas);
+        this.selectedOccupationCode = occupationCode;
+        if (!this.selectedOccupationCode) return;
+
+        // Get areas where the occupation's salary is highest.
+        this.getAreasWithHighestSalaries(this.selectedOccupationCode);
+        // Get a list of areas where the occupation is present. 
+        this.salaryService.getAreasWithOccupation(this.selectedOccupationCode)
+            .then(areas => {
+                areas.unshift(new Area());
+                this.areas = areas;
+            });
+    }
+
+    salaryChanged(salary : number) {
+        if (!salary || salary <= 0)
+            this.selectedSalaryAmount = null;
+        else
+            this.selectedSalaryAmount = salary;
+    }
+
+    hourlyChanged(hourly : number) {
+        if (!hourly || hourly <= 0)
+            this.selectedSalaryAmount = null;
+        else
+            this.selectedSalaryAmount = Math.round(hourly * 40 * 52);
     }
 
     getAreasWithHighestSalaries(occupationCode : string) {
@@ -92,13 +112,12 @@ export class HomeComponent implements OnInit {
     areaSelected(areaCode : number) {
         this.selectedAreaCode = areaCode;
         if (!this.selectedAreaCode) return;
-        this.salaryService.getOccupations()
-            .then(occupations => this.occupations = occupations);
-    }
 
-    selectFirstOccupation() {
-        if (!this.occupations || this.occupations.length <= 0) return;
-        this.getAreasWithHighestSalaries(this.occupations[0].code);
+        this.salaryService.getSalary(this.selectedAreaCode, this.selectedOccupationCode)
+            .then(salary => this.selectedSalary = salary);
+
+        this.salaryService.getAreasWithHighestSalariesAdjustedForCol(this.selectedOccupationCode)
+            .then(areas => this.initChart(areas));
     }
 
     initChart(areasWithSalary : any[]) {
@@ -110,6 +129,7 @@ export class HomeComponent implements OnInit {
         while (labels.length > 0) {
             this.barChartLabels.push(labels.pop());
         }
+        console.log(JSON.stringify(this.barChartLabels));
 
         let annualSalaryData = areasWithSalary.map(a => a.annualMedianPercentile);
         let hourlySalaryData = areasWithSalary.map(a => a.hourlyMedianPercentile);
@@ -117,6 +137,8 @@ export class HomeComponent implements OnInit {
             { data: annualSalaryData, label: 'Annual', yAxisID: 'y-axis-1' },
             { data: hourlySalaryData, label: 'Hourly', yAxisID: 'y-axis-2' }
         ];
+console.log(JSON.stringify(this.barChartData));
+
     }
 
     formatCityLabel(areaWithSalary) : any {

@@ -30,11 +30,21 @@ export class SalaryService {
         let url = 'http://localhost:52463/api/location/area.HighestSalaries?occupationCode=' + occupationCode;
         return this.http.get(url)
             .toPromise()
-            .then(response => response.json() as Salary)
+            .then(response => response.json())
             .catch(this.handleError);
     }
 
-    getSalaryData(areaCode : number, occupationCode : string) : Promise<Salary> {
+    getAreasWithHighestSalariesAdjustedForCol(occupationCode : string) : Promise<any> {
+        let url = 'http://localhost:52463/api/location/area.HighestSalaries?occupationCode=' + occupationCode
+            + '&adjustForCostOfLiving=true';
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response.json())
+            .catch(this.handleError);
+    }
+
+    // Gets a salary for a specific area and occupation.
+    getSalary(areaCode : number, occupationCode : string) : Promise<Salary> {
         let url = 'http://localhost:52463/api/salary?areaCode=' + areaCode + '&occupationCode=' + occupationCode;
         return this.http.get(url)
             .toPromise()

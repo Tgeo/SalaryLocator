@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { SourcesComponent } from './components/sources/sources.component';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { FormsModule }   from '@angular/forms';
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -26,7 +27,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
             { path: 'about', component: AboutComponent },
             { path: 'sources', component: SourcesComponent },
             { path: '**', redirectTo: 'home' }
-        ])
+        ]),
+        FormsModule
     ]
 })
 export class AppModule {

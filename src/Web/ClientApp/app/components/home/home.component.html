@@ -1,14 +1,14 @@
-<h1>Salary Locator</h1>
+<h1>Salary Locator - Find your best salary</h1>
 
 <form>
     <div class="form-group">
-        <label>What is your occupation?:</label>
+        <label>First, what's your job?:</label>
         <select (change)="occupationSelected($event.target.value)" class="form-control">
             <option *ngFor="let occupation of occupations" [value]="occupation.code">{{ occupation.title }}</option>
         </select>
 
-        <!--Don't render the chart server-side; It won't work (and causes issues rendering the HTML)-->
-        <div *ngIf="isBrowser && !selectedAreaCode" [@flyInOut]="toggle">
+        <div *ngIf="isBrowser && selectedOccupationCode && !selectedAreaCode" [@flyIn]="toggle">
+            <h4>Cool, here's where you'd make the most money:</h4>
             <canvas baseChart
                     chartType="bar"
                     legend="true"
@@ -17,22 +17,44 @@
                     [options]="barChartOptions"></canvas>
         </div>
 
-        <div *ngIf="areas" [@flyInOut]="toggle">
-            <h4>Great. Now, let's adjust for cost of living.</h4>
+        <div *ngIf="areas" [@flyIn]="toggle">
+            <h4>Next... let's adjust for cost of living, using "<a href="http://livingwage.mit.edu/">living wage</a>".</h4>
             <label>Where do you live?:</label>
             <select (change)="areaSelected($event.target.value)" class="form-control">
                 <option *ngFor="let area of areas" [value]="area.code">{{ area.name }}</option>
             </select>
         </div>
 
-        <div *ngIf="selectedAreaCode" [@flyInOut]="toggle">
-            <!-- TODO: COL adjusted chart goes here. -->
-            <canvas baseChart
-                    chartType="bar"
-                    legend="true"
-                    [datasets]="barChartData"
-                    [labels]="barChartLabels"
-                    [options]="barChartOptions"></canvas>
+        <div *ngIf="isBrowser && selectedAreaCode" [@flyIn]="toggle">
+            <div *ngIf="!selectedSalaryAmount" [@flyIn]="toggle">
+                <h4>Nice. After adjusting for the cost of living of your city, here are the winners:</h4>
+                <canvas baseChart
+                        chartType="bar"
+                        legend="true"
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"></canvas>
+            </div>
+
+            <h4>But, not everyone makes the average. If you make 20% more in your city, you'd probably make 20% more in another...</h4>
+            <label>What's your current salary (yearly)?:</label>
+            <input (input)="salaryChanged($event.target.value)" [value]="selectedSalaryAmount"
+                   placeholder="45,000" type="number" min="0" step="1" name="selectedSalary" />
+            <label>or hourly?:</label>
+            <input (input)="hourlyChanged($event.target.value)" [value]="(selectedSalaryAmount / 40 / 52).toFixed(2)" 
+                   placeholder="7.25" type="number" min="0" step=".01" name="selectedHourly" />
+                   
+            <div *ngIf="selectedSalaryAmount" [@flyIn]="toggle">
+                <p *ngIf="selectedSalary.annualMean">
+                    FYI: You make {{ (selectedSalaryAmount / selectedSalary.annualMean * 100).toFixed(2) }}% of the average salary of where you live.
+                </p>
+                <canvas baseChart
+                        chartType="bar"
+                        legend="true"
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"></canvas>
+            </div>
         </div>
     </div>
 </form>

@@ -248,3 +248,4 @@ ModelManifest.xml
 typings/
 dist/
 stats.json
+.DS_Store

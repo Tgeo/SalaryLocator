@@ -43,9 +43,11 @@ namespace SalaryLocator.API.Controllers
         }
 
         [HttpGet("area.HighestSalaries")]
-        public async Task<IActionResult> GetAreasWithHighestSalaries(string occupationCode)
+        public async Task<IActionResult> GetAreasWithHighestSalaries(string occupationCode, bool adjustForCostOfLiving = false)
         {
-            var areas = await _locationService.GetAreasWithHighestSalariesAsync(occupationCode);
+            var areas = adjustForCostOfLiving ?
+                await _locationService.GetAreasWithHighestSalariesAdjustForCostOfLivingAsync(occupationCode) :
+                await _locationService.GetAreasWithHighestSalariesAsync(occupationCode);
             if (areas == null || !areas.Any())
                 return NotFound();
             return Ok(areas);

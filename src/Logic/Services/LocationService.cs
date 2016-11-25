@@ -58,6 +58,7 @@ namespace SalaryLocator.Logic.Services
             return from salary in _dbContext.Salaries
                    join area in _dbContext.Areas on salary.AreaCode equals area.Code
                    where salary.OccupationCode == occupationCode
+                   orderby area.Name
                    select area;
         }
 
@@ -77,6 +78,58 @@ namespace SalaryLocator.Logic.Services
                     where occupation_code = @OccupationCode
                     order by greatest(coalesce(annual_med_pct, -1), coalesce(hourly_med_pct * 40 * 52, -1)) desc
                     limit 5
+                ";
+                var results = await connection.QueryAsync<AreaSalaryDTO>(sql, new { OccupationCode = occupationCode });
+                foreach (var result in results)
+                {
+                    result.Name = normalizeAreaName(result.Name);
+                }
+                return results;
+            }
+        }
+
+        public async Task<IEnumerable<AreaSalaryDTO>> GetAreasWithHighestSalariesAdjustForCostOfLivingAsync(string occupationCode)
+        {
+            // Not using EF here because of "greatest" in order by clause.
+            using (var connection = _dbContext.Database.GetDbConnection())
+            {
+                // PGSql does not support creating variables without functions.
+                // There is an "anonymous code block" but you can't return any data from it.
+                // Also, we don't want to setup Entity Framework to create this stored procedure just yet...
+                // So, for now -- we create the function each time we use it.
+                const string sql = @"
+                    CREATE OR REPLACE FUNCTION getCitiesWithHighestSalariesAdjustedForCol(occupationCode text)
+                    RETURNS table(name text, annual_med_pct DOUBLE precision, hourly_med_pct DOUBLE precision) AS $$
+                    DECLARE
+                        comparisonLivingWage money;
+                    BEGIN
+
+                    SELECT one_adult INTO comparisonLivingWage
+                    FROM living_wage
+                    WHERE fips_code = 1 -- national average
+                    LIMIT 1;
+
+                    RETURN query (
+                        SELECT subQuery.name, subQuery.annual, subQuery.hourly
+                        FROM (
+                            SELECT
+                                area.name,
+                                salary.annual_med_pct / (one_adult / comparisonLivingWage) AS annual,
+                                (salary.hourly_med_pct * 40 * 52) / (one_adult / comparisonLivingWage) AS hourly        
+                            FROM salary
+                            INNER JOIN area 
+                                ON area.area_code = salary.area_code
+                            INNER JOIN living_wage
+                                ON living_wage.fips_code = area.msa_code
+                            WHERE occupation_code = occupationCode AND jobs_per_1000 >= 6.5 -- magic number
+                        ) subQuery
+                        ORDER BY GREATEST(subQuery.annual, subQuery.hourly) DESC
+                        LIMIT 5);
+
+                    END;
+                    $$ LANGUAGE plpgsql;
+
+                    SELECT * FROM getCitiesWithHighestSalariesAdjustedForCol('15-1133');
                 ";
                 var results = await connection.QueryAsync<AreaSalaryDTO>(sql, new { OccupationCode = occupationCode });
                 foreach (var result in results)
